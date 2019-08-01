@@ -26,7 +26,7 @@
     "require": {
         "php": "^5.5 || >=7.0 <7.4",
         "symfony/monolog-bundle": "^2.12 || ^3.0",
-        "fluent/logger": "^0.3"
+        "fluent/logger": "^1.0"
     },
     "require-dev": {
         "friendsofphp/php-cs-fixer": "^2.2",
