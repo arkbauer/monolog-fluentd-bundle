@@ -1,5 +1,5 @@
 {
-    "name": "musement/monolog-fluentd-bundle",
+    "name": "brigthside/monolog-fluentd-bundle",
     "description": "Symfony2 bundle defining a fluentd handler for monolog",
     "homepage": "https://github.com/musement-oss/monolog-fluentd-bundle",
     "license": "MIT",
