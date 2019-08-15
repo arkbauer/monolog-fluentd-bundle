@@ -1,10 +1,15 @@
 {
-    "name": "brigthside/monolog-fluentd-bundle",
+    "name": "brightside/monolog-fluentd-bundle",
     "description": "Symfony2 bundle defining a fluentd handler for monolog",
-    "homepage": "https://github.com/musement-oss/monolog-fluentd-bundle",
+    "homepage": "https://github.com/Brightside56/monolog-fluentd-bundle",
     "license": "MIT",
     "type": "symfony-bundle",
     "authors": [
+        {
+            "name": "Brightside",
+            "email": "o.gumbar@papakaya.com",
+            "role": "Developer"
+        },        
         {
             "name": "Musement staff",
             "email": "oss@musement.com",
@@ -16,8 +21,8 @@
         }
     ],
     "support": {
-        "issues": "https://github.com/musement-oss/monolog-fluentd-bundle/issues",
-        "source": "https://github.com/musement-oss/monolog-fluentd-bundle/releases/latest"
+        "issues": "https://github.com/Brightside56/monolog-fluentd-bundle/issues",
+        "source": "https://github.com/Brightside56/monolog-fluentd-bundle/releases/latest"
     },
     "minimum-stability": "stable",
     "config": {
