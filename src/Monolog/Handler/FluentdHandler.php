@@ -93,7 +93,7 @@ class FluentdHandler extends AbstractProcessingHandler
     /**
      * {@inheritdoc}
      */
-    public function close()
+    public function close(): void
     {
         $this->logger->close();
     }
@@ -126,7 +126,7 @@ class FluentdHandler extends AbstractProcessingHandler
      *
      * @throws \Exception
      */
-    protected function write(array $record)
+    protected function write(array $record): void
     {
         unset($record['formatted']);
 
