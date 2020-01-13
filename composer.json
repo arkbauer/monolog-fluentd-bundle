@@ -1,5 +1,5 @@
 {
-    "name": "brightside/monolog-fluentd-bundle",
+    "name": "arkbauer/monolog-fluentd-bundle",
     "description": "Symfony2 bundle defining a fluentd handler for monolog",
     "homepage": "https://github.com/Brightside56/monolog-fluentd-bundle",
     "license": "MIT",
