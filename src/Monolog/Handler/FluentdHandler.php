@@ -13,6 +13,7 @@ namespace Musement\MonologFluentdBundle\Monolog\Handler;
 
 use Fluent\Logger\Entity;
 use Fluent\Logger\FluentLogger;
+use Monolog\Formatter\NormalizerFormatter;
 use Monolog\Handler\AbstractProcessingHandler;
 use Monolog\Logger;
 use Musement\MonologFluentdBundle\Monolog\Exception\MusementMonologFluentdHandlerException;
@@ -28,13 +29,13 @@ class FluentdHandler extends AbstractProcessingHandler
      * @see https://tools.ietf.org/html/rfc5424
      */
     protected static $psr3Levels = [
-        Logger::DEBUG => LOG_DEBUG,
-        Logger::INFO => LOG_INFO,
-        Logger::NOTICE => LOG_NOTICE,
-        Logger::WARNING => LOG_WARNING,
-        Logger::ERROR => LOG_ERR,
-        Logger::CRITICAL => LOG_CRIT,
-        Logger::ALERT => LOG_ALERT,
+        Logger::DEBUG     => LOG_DEBUG,
+        Logger::INFO      => LOG_INFO,
+        Logger::NOTICE    => LOG_NOTICE,
+        Logger::WARNING   => LOG_WARNING,
+        Logger::ERROR     => LOG_ERR,
+        Logger::CRITICAL  => LOG_CRIT,
+        Logger::ALERT     => LOG_ALERT,
         Logger::EMERGENCY => LOG_EMERG,
     ];
 
@@ -51,7 +52,7 @@ class FluentdHandler extends AbstractProcessingHandler
      * FluentdHandler constructor.
      *
      * @param FluentLogger $logger An instance of FluentdLogger
-     * @param int          $level  The minimum logging level at which this handler will be triggered
+     * @param int          $level The minimum logging level at which this handler will be triggered
      * @param bool         $bubble Whether the messages that are handled can bubble up the stack or not
      */
     public function __construct(
@@ -60,6 +61,8 @@ class FluentdHandler extends AbstractProcessingHandler
         $bubble = true
     ) {
         $this->logger = $logger;
+        // Use normalizer formatter to get extra data for logs
+        $this->setFormatter(new NormalizerFormatter());
 
         parent::__construct($level, $bubble);
     }
@@ -104,9 +107,9 @@ class FluentdHandler extends AbstractProcessingHandler
      * @param string|int Level number (monolog)
      * @param mixed $level
      *
+     * @return int Psr-3 level number
      * @throws InvalidArgumentException
      *
-     * @return int Psr-3 level number
      */
     public static function toPsr3Level($level)
     {
@@ -128,15 +131,16 @@ class FluentdHandler extends AbstractProcessingHandler
      */
     protected function write(array $record): void
     {
-        unset($record['formatted']);
-
+        $timestamp       = $record['datetime']->getTimestamp();
+        // Use formatted message to get extra info in logs
+        $record          = $record['formatted'];
         $record['level'] = static::toPsr3Level($record['level']);
 
         try {
             $this->logger->post2(new Entity(
                 $this->buildTag($record),
                 $record,
-                $record['datetime']->getTimestamp()
+                $timestamp
             ));
         } catch (\Exception $e) {
             if ($this->exceptions) {
@@ -152,9 +156,9 @@ class FluentdHandler extends AbstractProcessingHandler
     /**
      * @param array $record
      *
+     * @return string
      * @throws \LogicException
      *
-     * @return string
      */
     protected function buildTag(array $record)
     {
