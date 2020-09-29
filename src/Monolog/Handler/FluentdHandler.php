@@ -62,7 +62,7 @@ class FluentdHandler extends AbstractProcessingHandler
     ) {
         $this->logger = $logger;
         // Use normalizer formatter to get extra data for logs
-        $this->setFormatter(new NormalizerFormatter());
+        $this->setFormatter(new NormalizerFormatter(\DateTime::ISO8601));
 
         parent::__construct($level, $bubble);
     }
