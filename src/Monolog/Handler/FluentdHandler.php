@@ -134,6 +134,9 @@ class FluentdHandler extends AbstractProcessingHandler
         $timestamp       = $record['datetime']->getTimestamp();
         // Use formatted message to get extra info in logs
         $record          = $record['formatted'];
+        // Replace datetime with timestamp, to be used as es timestamp
+        $record['@timestamp'] = $record['datetime'];
+        unset($record['datetime']);
         $record['level'] = static::toPsr3Level($record['level']);
 
         try {
